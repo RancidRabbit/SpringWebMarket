@@ -15,9 +15,12 @@ public class ProductDTO {
 
     private int price;
 
+    private String categoryTitle;
+
     public ProductDTO(Product product) {
         this.id = product.getId();
         this.title = product.getTitle();
         this.price = product.getPrice();
+        this.categoryTitle = product.getCategories().getTitle();
     }
 }

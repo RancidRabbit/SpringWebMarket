@@ -14,7 +14,7 @@
 </head>
 <body ng-app="market-front">
 <div class="container" ng-controller="appController">
-    <h2>Главная страница</h2>
+    <h2>Магазин Оружия и Доспехов</h2>
     <table class="table">
         <thead>
         <tr>
@@ -35,9 +35,44 @@
         </tr>
         </tbody>
     </table>
-    <button type="button" class="btn btn-primary" ng-click="loadProducts()" >Update</button>
-    <button type="button" class="btn btn-primary" ng-click="next(i)" >Next Page</button>
-    <button type="button" class="btn btn-primary" ng-click="previous(i)" >Previous Page</button>
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" aria-label="Previous" ng-click="previous()">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li class="page-item" ng-repeat="pageIndex in pageIndexArray">
+                <button class="page-link" ng-click="loadProducts(pageIndex)">{{pageIndex}}</button>
+            </li>
+
+            <li class="page-item">
+                <a class="page-link" aria-label="Next" ng-click="next()">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <p></p>
+    <h3>Создать свой предмет</h3>
+
+    <form novalidate ng-submit="createNewProduct()">
+        <div class="mb-3">
+            <label  class="form-label">Название</label>
+            <input type="text" class="form-control" placeholder="Название" ng-model="new_product.title">
+        </div>
+        <div class="mb-3">
+            <label  class="form-label">Цена</label>
+            <input type="text" class="form-control" placeholder="Цена" ng-model="new_product.price">
+        </div>
+        <select class="form-select" ng-model="new_product.categoryTitle">
+            <option ng-repeat="c in allCategories">{{c}}</option>
+        </select>
+        <p></p>
+        <button type="submit" class="btn btn-primary">Создать</button>
+    </form>
 </div>
 </body>
 </html>
