@@ -16,5 +16,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
   List<Product> findProductByPriceBetween(int min_price, int max_price);
 
+
+
 }
 

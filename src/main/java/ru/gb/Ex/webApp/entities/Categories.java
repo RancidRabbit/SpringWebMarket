@@ -1,15 +1,17 @@
 package ru.gb.Ex.webApp.entities;
 
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "items")
-@Data
+@Table(name = "categories")
 @NoArgsConstructor
-public class Product {
+@Data
+public class Categories {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,11 +21,7 @@ public class Product {
     @Column(name = "title")
     private String title;
 
-    @Column(name = "price")
-    private int price;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Categories categories;
+    @OneToMany(mappedBy = "categories")
+    private List<Product> products;
 
 }
