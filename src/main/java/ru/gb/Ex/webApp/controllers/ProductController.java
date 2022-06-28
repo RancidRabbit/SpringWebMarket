@@ -2,16 +2,21 @@ package ru.gb.Ex.webApp.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.Ex.webApp.dto.ProductDTO;
 import ru.gb.Ex.webApp.entities.Categories;
 import ru.gb.Ex.webApp.entities.Product;
+import ru.gb.Ex.webApp.exceptions.DataValidationException;
 import ru.gb.Ex.webApp.exceptions.ResourceNotFoundException;
 import ru.gb.Ex.webApp.services.CategoryService;
 import ru.gb.Ex.webApp.services.ProductService;
 
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -62,7 +67,16 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ProductDTO addProduct(@RequestBody ProductDTO productDTO) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ProductDTO addProduct(@RequestBody @Valid ProductDTO productDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new DataValidationException(result
+                    .getAllErrors()
+                    .stream()
+                    .map(ObjectError::getDefaultMessage)
+                    .collect(Collectors.toList()));
+        }
+        /* */
         Product product = new Product();
         product.setId(productDTO.getId());
         product.setTitle(productDTO.getTitle());
@@ -75,12 +89,12 @@ public class ProductController {
         return new ProductDTO(product);
     }
 
-    @GetMapping("/products/filter")
+   /* @GetMapping("/products/filter")
     public List<Product> priceFilter(@RequestParam(value = "min", required = false) Integer min_price,
                                          @RequestParam(value = "max",required = false) Integer max_price) {
         if (Optional.ofNullable(max_price).isPresent() & Optional.ofNullable(min_price).isEmpty()) return productService.findProductByPriceBefore((max_price));
         if (Optional.ofNullable(min_price).isPresent() & Optional.ofNullable(max_price).isEmpty()) return productService.findProductByPriceAfter((min_price));
         return productService.findProductByPriceBetween((min_price),(max_price));
-    }
+    }*/
 
 }
