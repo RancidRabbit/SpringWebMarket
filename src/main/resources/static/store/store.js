@@ -23,15 +23,6 @@ angular.module('market-front').controller('storeController', function ($scope, $
         alert('Продукт ' + product_id + ' добавлен в корзину');
     }
 
-   /* $scope.navToCart = function (productId){
-        $location.path('cart/'+ productId);
-    }*/
-
-
-   /* $scope.showInfo = function (product) {
-        alert(product.title);
-    }*/
-
     $scope.generatePagesIndexes = function (startPage, endPage) {
         let arr = [];
         for (let i = startPage; i < endPage + 1; i++) {

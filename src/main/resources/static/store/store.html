@@ -16,10 +16,10 @@
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
             <td>
-                <button type="button" class="btn btn-primary" ng-click="toCart(p.id)" >В Корзину</button>
+                <button type="button" class="btn btn-primary" ng-click="toCart(p.id)" ng-show="isUserLoggedIn()">В Корзину</button>
             </td>
             <td>
-                <button type="button" class="btn btn-primary" ng-click="navToEditProductPage(p.id)" >Изменить</button>
+                <button type="button" class="btn btn-primary" ng-click="navToEditProductPage(p.id)" ng-show="isUserLoggedIn()" >Изменить</button>
             </td>
         </tr>
         </tbody>
