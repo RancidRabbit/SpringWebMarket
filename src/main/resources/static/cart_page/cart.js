@@ -1,7 +1,7 @@
-angular.module('market-front').controller('cartController', function ($scope, $http) {
+angular.module('market-front').controller('cartController', function ($rootScope, $scope, $http) {
     const contextPath = 'http://localhost:8050/app/';
 
-    $scope.loadProducts = function () {
+    $rootScope.loadProducts = function () {
        $http.get(contextPath + 'cart')
         .then(function (response) {
             console.log(response);
