@@ -4,8 +4,9 @@
     <tr>
         <td>ID</td>
         <td>Название</td>
+        <td>Количество</td>
         <td>Стоимость</td>
-        <td>Категория</td>
+        <td>Сумма</td>
         <td></td>
     </tr>
     </thead>
@@ -13,8 +14,9 @@
     <tr ng-repeat="p in productsList">
         <td>{{p.id}}</td>
         <td>{{p.title}}</td>
+        <td>{{p.count}}</td>
         <td>{{p.price}}</td>
-        <td>{{p.categoryTitle}}</td>
+        <td>{{p.sum}}</td>
         <td>
             <button type="button" class="btn btn-primary" ng-click="deleteFromCart(p.id)" >-</button>
         </td>

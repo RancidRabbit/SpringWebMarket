@@ -1,4 +1,4 @@
-angular.module('market-front').controller('storeController', function ($scope, $http, $location) {
+angular.module('market-front').controller('storeController', function ($rootScope, $scope, $http, $location) {
     const contextPath = 'http://localhost:8050/app/';
 
     let currentPageIndex = 1;
@@ -19,8 +19,9 @@ angular.module('market-front').controller('storeController', function ($scope, $
     }
 
     $scope.toCart = function(product_id) {
-        $http.put(contextPath + 'cart/' + product_id);
+        $http.post(contextPath + 'cart/' + product_id);
         alert('Продукт ' + product_id + ' добавлен в корзину');
+        $rootScope.loadProducts();
     }
 
     $scope.generatePagesIndexes = function (startPage, endPage) {

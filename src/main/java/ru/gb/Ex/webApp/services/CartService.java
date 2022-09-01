@@ -1,50 +1,46 @@
 package ru.gb.Ex.webApp.services;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import ru.gb.Ex.webApp.dto.Cart;
+import ru.gb.Ex.webApp.dto.CartItem;
 import ru.gb.Ex.webApp.dto.ProductDTO;
-import ru.gb.Ex.webApp.entities.Product;
 import ru.gb.Ex.webApp.exceptions.ResourceNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@Data
 @RequiredArgsConstructor
+@Slf4j
 public class CartService {
 
-    private final ProductService productService;
+    private final CacheManager manager;
 
-    private List<Product> products = new ArrayList<>();
+    @Cacheable(value = "cart")
+    public Cart createCart(Long userId) {
+        Cart cart = new Cart();
+        log.info("Creating cart instance");
 
+        cart.setUserId(userId);
 
-    public void addProduct(int id) {
-
-        Product product = productService
-                .findById(id)
-                .get();
-
-        products.add(product);
-
-
+        return cart;
     }
 
-    public List<Product> showAllProducts() {
-        return products;
+    @Cacheable(value = "items")
+    public List<CartItem> getAllItems() {
+        Cart cart = createCart(1L);
+        return cart.getItems();
     }
 
 
-    public void deleteProduct(int id) {
 
-        Product product = productService
-                .findById(id)
-                .get();
 
-        products.remove(product);
-    }
+
 
 
 }
