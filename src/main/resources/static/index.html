@@ -12,6 +12,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.10/ngStorage.min.js"></script>
+    <script src="webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="webjars/stomp-websocket/stomp.min.js"></script>
+    <script src="webjars/jquery/jquery.min.js"></script>
 
 </head>
 <body ng-app="market-front">
@@ -32,6 +35,9 @@
 
                     <li class="nav-item" ng-show="isUserLoggedIn()">
                         <a class="nav-link" href="#!/cart_page">Корзина</a>
+                    </li>
+                    <li class="nav-item" ng-show="isUserLoggedIn()">
+                        <a class="nav-link" ng-click="provideReport()">Загрузить отчет</a>
                     </li>
 
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
@@ -78,6 +84,7 @@
     <script src="create_product/create_product.js"></script>
     <script src="cart_page/cart.js"></script>
     <script src="registration/registration.js"></script>
+
 </div>
 </body>
 </html>

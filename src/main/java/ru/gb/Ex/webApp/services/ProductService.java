@@ -42,6 +42,9 @@ public class ProductService {
 
     }
 
+    public List<Product> findAll() {
+        return repo.findAll();
+    }
 
     public void deleteProduct(int id) {
         repo.deleteById((long) id);

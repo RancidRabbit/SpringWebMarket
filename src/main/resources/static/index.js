@@ -44,6 +44,7 @@
 
 angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
     const contextPath = 'http://localhost:8050/app/';
+    var stompClient = null;
 
     $scope.tryToAuth = function () {
         $http.post(contextPath + 'auth', $scope.user)
@@ -59,6 +60,18 @@ angular.module('market-front').controller('indexController', function ($rootScop
                 alert("Не верный логин или пароль");
             });
     };
+
+    $scope.provideReport = function () {
+        var socket = new SockJS('/gs-guide-websocket');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+           console.log('Connected: ' + frame);
+           stompClient.subscribe('/topic/greetings', function (greeting) {
+            alert("Success");
+           });
+        });
+    }
+
 
     $scope.tryToLogout = function () {
         $scope.clearUser();
