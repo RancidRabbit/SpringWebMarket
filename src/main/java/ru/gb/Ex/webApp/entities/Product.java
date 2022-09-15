@@ -1,13 +1,17 @@
 package ru.gb.Ex.webApp.entities;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "items")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Product {
 
@@ -22,4 +26,23 @@ public class Product {
     @Column(name = "price")
     private int price;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Categories categories;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return price == product.price &&
+                Objects.equals(id, product.id) &&
+                Objects.equals(title, product.title);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, price);
+    }
 }
