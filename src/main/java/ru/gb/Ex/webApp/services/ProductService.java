@@ -5,6 +5,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.gb.Ex.webApp.entities.Product;
 import ru.gb.Ex.webApp.repositories.ProductRepo;
@@ -43,7 +44,7 @@ public class ProductService {
     }
 
     public List<Product> findAll() {
-        return repo.findAll();
+        return repo.findAll(Sort.by("price").ascending());
     }
 
     public void deleteProduct(int id) {

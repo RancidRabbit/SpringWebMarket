@@ -45,6 +45,7 @@
 angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
     const contextPath = 'http://localhost:8050/app/';
     var stompClient = null;
+    const handlers = [];
 
     $scope.tryToAuth = function () {
         $http.post(contextPath + 'auth', $scope.user)
@@ -61,17 +62,30 @@ angular.module('market-front').controller('indexController', function ($rootScop
             });
     };
 
-    $scope.provideReport = function () {
-        var socket = new SockJS('/gs-guide-websocket');
+    $scope.setConnection = function () {
+        var socket = new SockJS('gs-guide-websocket');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, function (frame) {
            console.log('Connected: ' + frame);
-           stompClient.subscribe('/topic/greetings', function (greeting) {
-            alert("Success");
-           });
+           stompClient.subscribe('/topic/greetings', function (response) {
+               /* return сущность метода response приходит сюда для отображения на фронт (шаг 3) */
+               $scope.showLink(response.body);
+           }
+
+           );
         });
     }
 
+    /* Формирует обьект для передачи в параметр метода response (ReportController) ???  (1 шаг) */
+    $scope.sendMsg = function() {
+        stompClient.send("/app/hello", {}, JSON.stringify({'link': ''}));
+    }
+
+
+    $scope.showLink = function(message) {
+        /* обработка метода отображения на фронте ответа от response из ReportController (шаг 4) */
+        alert(message);
+    }
 
     $scope.tryToLogout = function () {
         $scope.clearUser();
@@ -99,5 +113,9 @@ angular.module('market-front').controller('indexController', function ($rootScop
     $scope.regUser = function () {
        $location.path('/register');
     }
+
+
+
+    $scope.setConnection();
 
 });

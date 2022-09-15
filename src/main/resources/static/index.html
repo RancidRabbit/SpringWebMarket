@@ -37,9 +37,16 @@
                         <a class="nav-link" href="#!/cart_page">Корзина</a>
                     </li>
                     <li class="nav-item" ng-show="isUserLoggedIn()">
-                        <a class="nav-link" ng-click="provideReport()">Загрузить отчет</a>
+                        <a class="nav-link" ng-click="sendMsg()">Загрузить отчет</a>
+                        <table id = "report">
+                            <thead>
+                            <tr>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody id = "reportLink"></tbody>
+                        </table>
                     </li>
-
                     <li class="nav-item" ng-show="!isUserLoggedIn()">
                         <form class="align-middle" ng-submit="tryToAuth()">
                             <div class="input-group input-group-sm" style="padding: 4px;">
