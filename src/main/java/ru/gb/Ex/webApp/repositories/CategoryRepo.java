@@ -13,7 +13,7 @@ public interface CategoryRepo extends JpaRepository<Categories, Long> {
 
       Optional<Categories> findByTitle(String title);
 
-      @Query("select title from Categories")
+      @Query("select title from Categories ")
       List<String> findAllCategories();
 
 }
