@@ -1,6 +1,7 @@
 package ru.gb.Ex.webApp.controllers;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.gb.Ex.webApp.dto.Cart;
 import ru.gb.Ex.webApp.dto.CartItem;

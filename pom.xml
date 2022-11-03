@@ -23,6 +23,10 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>5.2.2</version>
@@ -126,6 +130,18 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<!--<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+				<version>8.5.13</version>
+				<configuration>
+					<user>postgres</user>
+					<password>fright89</password>
+					<schemas>
+						<schema>core</schema>
+					</schemas>
+				</configuration>
+			</plugin>-->
 		</plugins>
 	</build>
 

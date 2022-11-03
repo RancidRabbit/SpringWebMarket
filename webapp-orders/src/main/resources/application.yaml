@@ -1,10 +1,15 @@
 server:
   port: 8070
-
+  servlet:
+    context-path: /app
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/order
+    url: jdbc:postgresql://localhost:5432/orders
     username: postgres
     password: fright89
 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

@@ -12,6 +12,7 @@ import ru.gb.Ex.webApp.entities.Product;
 import ru.gb.Ex.webApp.exceptions.DataValidationException;
 import ru.gb.Ex.webApp.exceptions.ResourceNotFoundException;
 import ru.gb.Ex.webApp.services.CategoryService;
+import ru.gb.Ex.webApp.services.OrderService;
 import ru.gb.Ex.webApp.services.ProductService;
 
 import javax.validation.Valid;
@@ -25,6 +26,8 @@ public class ProductController {
     private final ProductService productService;
     
     private final CategoryService categoryService;
+
+    private final OrderService orderService;
 
     @GetMapping("/products")
     public Page<ProductDTO> findAll(@RequestParam(name = "p", defaultValue = "1") int pageIndex ) {
@@ -88,6 +91,7 @@ public class ProductController {
         productService.addProduct(product);
         return new ProductDTO(product);
     }
+
 
    /* @GetMapping("/products/filter")
     public List<Product> priceFilter(@RequestParam(value = "min", required = false) Integer min_price,

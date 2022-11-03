@@ -5,7 +5,7 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/market
+    url: jdbc:postgresql://localhost:5432/core
     username: postgres
     password: fright89
   jpa:
@@ -20,3 +20,4 @@ jwt:
   lifetime: 3600000
 
 reportFilesDirectory: ${user.home}/Downloads
+webApp.service.url: http://localhost:8070/api/v1/orders
