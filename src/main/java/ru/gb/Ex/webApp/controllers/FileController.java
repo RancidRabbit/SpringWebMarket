@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.gb.Ex.webApp.dto.FileSaveRequest;
 import ru.gb.Ex.webApp.services.FileService;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController

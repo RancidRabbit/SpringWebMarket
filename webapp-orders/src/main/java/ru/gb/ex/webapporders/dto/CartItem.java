@@ -1,15 +1,14 @@
-package ru.gb.Ex.webApp.dto;
+package ru.gb.ex.webapporders.dto;
 
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
-@Builder
+@NoArgsConstructor
 
 public class CartItem implements Serializable {
 

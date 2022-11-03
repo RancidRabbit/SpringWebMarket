@@ -1,5 +1,6 @@
 angular.module('market-front').controller('cartController', function ($rootScope, $scope, $http) {
     const contextPath = 'http://localhost:8050/app/';
+    const toOrders = 'http://localhost:8050/app/send';
 
     $rootScope.loadProducts = function () {
        $http.get(contextPath + 'cart')
@@ -17,6 +18,11 @@ angular.module('market-front').controller('cartController', function ($rootScope
         });
     }
 
+    $scope.makeOrder = function() {
+        $http.get(toOrders).then(function (response) {
+             alert("Ваша заказ успешно сформирован!")
+        })
+    }
 
     $scope.loadProducts();
 
