@@ -1,8 +1,6 @@
 package ru.gb.Ex.webApp.services;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -10,9 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.gb.Ex.webApp.entities.Product;
 import ru.gb.Ex.webApp.repositories.ProductRepo;
 
-import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -34,8 +30,8 @@ public class ProductService {
         return repo.findAll(PageRequest.of(pageIndex, pageSize));
     }
 
-    public Optional<Product> findById(int id) {
-        return repo.findById((long) id);
+    public Optional<Product> findById(Long id) {
+        return repo.findById(id);
     }
 
     public Product addProduct(Product product) {

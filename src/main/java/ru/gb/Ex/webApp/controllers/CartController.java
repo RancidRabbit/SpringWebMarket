@@ -1,51 +1,41 @@
 package ru.gb.Ex.webApp.controllers;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import ru.gb.Ex.webApp.dto.Cart;
-import ru.gb.Ex.webApp.dto.CartItem;
-import ru.gb.Ex.webApp.dto.ProductDTO;
-import ru.gb.Ex.webApp.exceptions.ResourceNotFoundException;
-import ru.gb.Ex.webApp.services.AddProductService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import ru.gb.Ex.webApp.dto.CartDTO;
 import ru.gb.Ex.webApp.services.CartService;
-import ru.gb.Ex.webApp.services.DeleteProductService;
-import ru.gb.Ex.webApp.services.ProductService;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/carts")
 public class CartController {
 
     private final CartService cartService;
 
-    private final AddProductService addProduct;
 
-    private final ProductService productService;
-
-    private final DeleteProductService deleteProductService;
-
-    @GetMapping("/cartCreate")
-    public Cart getCart(@RequestParam Long userId){
-        return cartService.createCart(userId);
+    @GetMapping()
+    public CartDTO getCurrentCart() {
+        return cartService.getCurrentCart();
     }
 
-   @GetMapping("/cart")
-   public List<CartItem> getAll(){
-        return cartService.getAllItems();
+    @GetMapping("/decrease/{id}")
+    public void decreaseFromCart(@PathVariable Long id){
+        cartService.decreaseFromCart(id);
+    }
+
+    @GetMapping("/add/{id}")
+    public void addProductByIdToCart(@PathVariable Long id){
+        cartService.addProductByIdToCart(id);
+    }
+
+   @GetMapping("/clear")
+   public void clearCart(){
+        cartService.clear();
    }
 
-  @PostMapping("/cart/{id}")
-  public void addToCart(@PathVariable int id) {
-                 addProduct.addProduct(productService.findById(id)
-                .map(ProductDTO::new)
-                .orElseThrow(() -> new ResourceNotFoundException("Не найден продукт с id " + id)));
-  }
 
-  @DeleteMapping("/cart/{id}")
-  public void deleteFromCart(@PathVariable int id){
-        deleteProductService.deleteItem((long) id);
-  }
 
 }

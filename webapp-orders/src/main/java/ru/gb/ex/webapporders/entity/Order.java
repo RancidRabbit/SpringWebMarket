@@ -1,5 +1,6 @@
 package ru.gb.ex.webapporders.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "orders")
+@EqualsAndHashCode(exclude = "orderItems")
 public class Order {
 
     @Id
@@ -17,8 +19,14 @@ public class Order {
     private Long id;
 
     @Column
-    private Double price;
+    private int total_price;
 
-    @OneToMany(mappedBy = "order")
+    @Column
+    private Long userId;
+
+    @Column
+    private String email;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     List<OrderItem> orderItems;
 }

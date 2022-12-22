@@ -1,6 +1,7 @@
 package ru.gb.Ex.webApp.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,6 +18,7 @@ import ru.gb.Ex.webApp.services.UserService;
 import ru.gb.Ex.webApp.utils.JwtTokenUtil;
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -34,6 +36,7 @@ public class AuthController {
             return new ResponseEntity<>(new ErrorMsg("Incorrect username or password"), HttpStatus.UNAUTHORIZED);
         }
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
+        log.info("User: " + userDetails.getUsername());
         String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthResponse(token));
     }

@@ -1,10 +1,11 @@
 package ru.gb.ex.webapporders.service;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.gb.ex.webapporders.dto.CartItem;
+import ru.gb.ex.webapporders.dto.CartItemDTO;
+import ru.gb.ex.webapporders.dto.toMakeOrderDTO;
 import ru.gb.ex.webapporders.entity.Order;
 import ru.gb.ex.webapporders.entity.OrderItem;
 import ru.gb.ex.webapporders.repository.OrderItemRepo;
@@ -12,11 +13,10 @@ import ru.gb.ex.webapporders.repository.OrderRepo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
     private final OrderItemRepo itemRepo;
@@ -24,28 +24,31 @@ public class OrderService {
     private final OrderRepo orderRepo;
 
     @Transactional
-    public void makeOrder(List<CartItem> cartItems) {
+    public void makeOrder(toMakeOrderDTO toMakeOrderDTO) {
 
-        System.out.println("Incoming goods: " + cartItems);
+        log.info("Incoming goods: " + toMakeOrderDTO.getCartItems());
 
         Order order = new Order();
         orderRepo.save(order);
+
         List<OrderItem> buffList = new ArrayList<>();
 
-        for (CartItem cartItem : cartItems) {
+        for (CartItemDTO cartItem : toMakeOrderDTO.getCartItems()) {
             OrderItem orderItem = new OrderItem();
-            orderItem.setCount(cartItem.getCount());
-            orderItem.setItem_price(cartItem.getSum());
-            orderItem.setName(cartItem.getTitle());
+            orderItem.setTitle(cartItem.getTitle());
+            orderItem.setQuantity(cartItem.getQuantity());
+            orderItem.setPricePerProduct(cartItem.getPricePerProduct());
+            orderItem.setPrice(cartItem.getPrice());
             orderItem.setOrder(order);
             buffList.add(orderItem);
-            itemRepo.save(orderItem);
+           /* itemRepo.save(orderItem);*/
         }
 
         order.setOrderItems(buffList);
-        Double sum = buffList.stream().map(OrderItem::getItem_price).reduce(0., Double::sum);
-        order.setPrice(sum);
-
+        order.setUserId(toMakeOrderDTO.getUserDTOreq().getId());
+        order.setEmail(toMakeOrderDTO.getUserDTOreq().getEmail());
+        int sum = buffList.stream().map(OrderItem::getPrice).reduce(0, Integer::sum);
+        order.setTotal_price(sum);
     }
 
 

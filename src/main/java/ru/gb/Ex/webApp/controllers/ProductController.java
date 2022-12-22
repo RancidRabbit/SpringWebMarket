@@ -38,7 +38,7 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public ProductDTO findById(@PathVariable int id) {
+    public ProductDTO findById(@PathVariable Long id) {
         return productService.findById(id)
                 .map(ProductDTO::new)
                 .orElseThrow(() -> new ResourceNotFoundException("Продукт с id: " + id + " не найден!"));

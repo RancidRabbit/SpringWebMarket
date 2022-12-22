@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.ConstraintValidator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -25,7 +24,6 @@ public class UserDTO {
     @NotNull(message = "Введите адрес электронной почты")
     @Pattern(regexp = "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$", message = "Некорректный адрес электронной почты")
     private String email;
-
 
 
 }
