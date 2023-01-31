@@ -25,7 +25,6 @@ public class CartService {
     }
 
     public CartDTO getCurrentCart(){
-        int a = 5;
         return cartDTO;
     }
 
