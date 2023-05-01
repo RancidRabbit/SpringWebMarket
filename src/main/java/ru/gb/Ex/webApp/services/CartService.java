@@ -18,7 +18,7 @@ public class CartService {
     private final ProductService productService;
 
     private CartDTO cartDTO;
-    private String str = "Str";
+
     @PostConstruct
     public void init() {
         cartDTO = new CartDTO();
