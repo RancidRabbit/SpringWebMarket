@@ -16,4 +16,7 @@ public class ExceptionsHandler {
     public ResponseEntity<?> catchDataValidationException(DataValidationException e) {
         return new ResponseEntity<>(new ErrorMsg(e.getMessages()),HttpStatus.BAD_REQUEST);
     }
+
+
+
 }

@@ -31,6 +31,7 @@ public class  FileService {
 
 
    public byte[] getFileData(String fileName) throws IOException {
+        /* Зачем тут resolve(fileName) ? */
         return Files.readAllBytes(getFilePath(fileName).resolve(fileName));
    }
 

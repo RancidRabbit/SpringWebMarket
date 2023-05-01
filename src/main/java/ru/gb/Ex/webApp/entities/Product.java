@@ -1,18 +1,18 @@
 package ru.gb.Ex.webApp.entities;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "items")
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = "categories")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Categories categories;
 
-    @Override
+    /*@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -43,5 +43,5 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(id, title, price);
-    }
+    }*/
 }

@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.gb.Ex.webApp.dto.FileSaveRequest;
 import ru.gb.Ex.webApp.services.FileService;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @RestController
@@ -17,7 +15,7 @@ public class FileController {
     private final FileService fileService;
 
 
-    @PostMapping
+    @PostMapping()
     public Boolean saveString(@RequestBody FileSaveRequest fileSaveRequest) {
         try {
            fileService.save(fileSaveRequest.getText(), fileSaveRequest.getName());

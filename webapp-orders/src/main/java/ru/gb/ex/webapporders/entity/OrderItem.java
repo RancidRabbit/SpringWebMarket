@@ -1,10 +1,8 @@
 package ru.gb.ex.webapporders.entity;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import ru.gb.ex.webapporders.dto.CartItem;
 
 import javax.persistence.*;
 
@@ -12,7 +10,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "order_item")
+@Table(name = "order_items")
+@EqualsAndHashCode(exclude = "order")
 public class OrderItem {
 
     @Id
@@ -21,13 +20,16 @@ public class OrderItem {
     private Long id;
 
     @Column
-    private Long count;
+    private String title;
 
     @Column
-    private String name;
+    private int quantity;
 
     @Column
-    private Double item_price;
+    private int pricePerProduct;
+
+    @Column
+    private int price;
 
     @ManyToOne
     @JoinColumn(name = "order_id")

@@ -1,46 +1,52 @@
 package ru.gb.Ex.webApp.services;
 
+
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import ru.gb.Ex.webApp.dto.Cart;
-import ru.gb.Ex.webApp.dto.CartItem;
-import ru.gb.Ex.webApp.dto.ProductDTO;
+import ru.gb.Ex.webApp.dto.CartDTO;
+import ru.gb.Ex.webApp.dto.CartItemDTO;
+import ru.gb.Ex.webApp.entities.Product;
 import ru.gb.Ex.webApp.exceptions.ResourceNotFoundException;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class CartService {
 
-    private final CacheManager manager;
+    private final ProductService productService;
 
-    @Cacheable(value = "cart")
-    public Cart createCart(Long userId) {
-        Cart cart = new Cart();
-        log.info("Creating cart instance");
-
-        cart.setUserId(userId);
-
-        return cart;
+    private CartDTO cartDTO;
+    private String str = "Str";
+    @PostConstruct
+    public void init() {
+        cartDTO = new CartDTO();
     }
 
-    @Cacheable(value = "items")
-    public List<CartItem> getAllItems() {
-        Cart cart = createCart(1L);
-        return cart.getItems();
+    public CartDTO getCurrentCart(){
+        return cartDTO;
     }
 
+   public void decreaseFromCart(Long id) {
+        cartDTO.decreaseProduct(id);
+   }
+
+   public List<CartItemDTO> getAllCartItems(){
+       return cartDTO.getItems();
+   }
 
 
+   public void addProductByIdToCart(Long id) {
+        if(!getCurrentCart().addProduct(id)) {
+            Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Remote"));
+            getCurrentCart().addProduct(product);
+        }
+   }
 
-
+   public void clear(){
+        getCurrentCart().clearCart();
+   }
 
 
 }

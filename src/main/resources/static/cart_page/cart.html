@@ -11,18 +11,26 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="p in productsList">
+    <tr ng-repeat="p in Cart.items">
         <td>{{p.id}}</td>
         <td>{{p.title}}</td>
-        <td>{{p.count}}</td>
+        <td>{{p.quantity}}</td>
+        <td>{{p.pricePerProduct}}</td>
         <td>{{p.price}}</td>
-        <td>{{p.sum}}</td>
         <td>
-            <button type="button" class="btn btn-primary" ng-click="deleteFromCart(p.id)" >-</button>
+            <button type="button" class="btn btn-primary" ng-click="deleteFromCart(p.id)">-</button>
         </td>
-
+        <td>
+            <button type="button" class="btn btn-primary" ng-click="addToCart(p.id)">+</button>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>Итого</td>
+        <td>{{Cart.totalPrice}}</td>
     </tr>
     </tbody>
 </table>
 <br>
-<button type="button" class="btn btn-primary" ng-click="makeOrder()" >Оформить заказ</button>
+<button type="button" class="btn btn-primary" ng-click="makeOrder()">Оформить заказ</button>
+<button type="button" class="btn btn-primary" ng-click="clearCart()">Очистить корзину</button>

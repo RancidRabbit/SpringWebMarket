@@ -1,26 +1,45 @@
 angular.module('market-front').controller('cartController', function ($rootScope, $scope, $http) {
-    const contextPath = 'http://localhost:8050/app/';
+    const contextPath = 'http://localhost:8050/app/api/v1/carts';
     const toOrders = 'http://localhost:8050/app/send';
 
+    /* Название метода поменять? loadCart() */
     $rootScope.loadProducts = function () {
-       $http.get(contextPath + 'cart')
-        .then(function (response) {
-            console.log(response);
-            $scope.productsList = response.data;
-        });
-    }
-
-    $scope.deleteFromCart = function(product_id) {
-        $http.delete(contextPath + 'cart/' + product_id)
+        $http.get(contextPath)
             .then(function (response) {
-             alert("Продукт: " + product_id + " удален из корзины");
-             $scope.loadProducts();
-        });
+                console.log(response);
+                $scope.Cart = response.data;
+            });
     }
 
-    $scope.makeOrder = function() {
-        $http.get(toOrders).then(function (response) {
-             alert("Ваша заказ успешно сформирован!")
+    /* Название метода поменять? */
+    $scope.deleteFromCart = function (product_id) {
+        $http.get(contextPath + '/decrease/' + product_id)
+            .then(function (response) {
+                $scope.loadProducts();
+            });
+    }
+
+    /* Название метода поменять? */
+    $scope.addToCart = function (product_id) {
+        $http.get(contextPath + '/add/' + product_id)
+            .then(function (response) {
+                $scope.loadProducts();
+            });
+    }
+
+    $scope.clearCart = function () {
+        $http.get(contextPath + '/clear')
+            .then(function (response) {
+                $scope.loadProducts();
+            });
+    }
+
+
+    $scope.makeOrder = function () {
+        $http.post(toOrders).then(function (response) {
+            alert("Ваш заказ успешно сформирован!");
+            $scope.clearCart();
+            $scope.loadProducts();
         })
     }
 
