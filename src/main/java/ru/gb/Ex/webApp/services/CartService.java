@@ -39,7 +39,7 @@ public class CartService {
 
    public void addProductByIdToCart(Long id) {
         if(!getCurrentCart().addProduct(id)) {
-            Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Такого товара не существует!"));
+            Product product = productService.findById(id).orElseThrow(() -> new ResourceNotFoundException("Remote"));
             getCurrentCart().addProduct(product);
         }
    }
