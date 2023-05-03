@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @Service
 public class  FileService {
@@ -14,7 +15,7 @@ public class  FileService {
 
     public FileService(@Value("${reportFilesDirectory}") String baseDir) throws IOException {
         this.baseDir = baseDir;
-        Path path = Path.of(baseDir);
+        Path path = Paths.get(baseDir);
         if (!Files.exists(path)) {
             Files.createDirectory(path);
         }
@@ -26,7 +27,7 @@ public class  FileService {
 
 
    public Path getFilePath(String fileName) {
-        return Path.of(baseDir).resolve(fileName);
+        return Paths.get(baseDir).resolve(fileName);
    }
 
 
