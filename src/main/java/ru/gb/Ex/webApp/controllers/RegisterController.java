@@ -42,7 +42,7 @@ public class RegisterController {
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> regUser (@RequestBody @Valid UserDTO userDTO, BindingResult result) {
-        if (userService.findByUsername(userDTO.getUsername()).isEmpty()) {
+        if (!userService.findByUsername(userDTO.getUsername()).isPresent()) {
             if (result.hasErrors()) {
                 throw new DataValidationException(result
                         .getAllErrors()
@@ -54,7 +54,7 @@ public class RegisterController {
             User user = new User();
             user.setUsername(userDTO.getUsername());
             user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            if (userService.findByEmail(userDTO.getEmail()).isEmpty()) {
+            if (!userService.findByEmail(userDTO.getEmail()).isPresent()) {
                 user.setEmail(userDTO.getEmail());
             } else throw new ResourceNotFoundException("email " + userDTO.getEmail() + " уже используется");
             user.setRoles(Collections.singletonList(role));

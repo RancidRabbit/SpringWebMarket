@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class ErrorMsg {
     }
 
     public ErrorMsg(String message) {
-        this(List.of(message));
+        this(Collections.singletonList(message));
     }
 
     public ErrorMsg(String... messages) {
