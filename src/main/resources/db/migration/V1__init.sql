@@ -1,3 +1,5 @@
+
+
 create table categories (id bigserial primary key, title varchar(40));
 insert into categories (title) values
 ('Оружие'),

@@ -1,5 +1,5 @@
 angular.module('market-front').controller('registration', function ($scope, $http, $localStorage, $location) {
-    const contextPath = 'http://localhost:8050/app/';
+    const contextPath = 'http://209.38.249.127:8050/app/';
 
 
      $scope.regSubmit = function () {

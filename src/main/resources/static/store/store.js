@@ -1,7 +1,7 @@
 angular.module('market-front').controller('storeController', function ($rootScope, $scope, $http, $location) {
 
     /* привести url'ы к единой структуре */
-    const contextPath = 'http://localhost:8050/app/';
+    const contextPath = 'http://209.38.249.127:8050/app/';
 
     let currentPageIndex = 1;
 
@@ -21,7 +21,7 @@ angular.module('market-front').controller('storeController', function ($rootScop
     }
 
     $scope.toCart = function(product_id) {
-        $http.get('http://localhost:8050/app/api/v1/carts' + '/add/' + product_id);
+        $http.get('http://209.38.249.127:8050/app/api/v1/carts' + '/add/' + product_id);
         alert('Продукт ' + product_id + ' добавлен в корзину');
         $rootScope.loadProducts();
     }
