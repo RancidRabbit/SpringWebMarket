@@ -1,5 +1,5 @@
 angular.module('market-front').controller('editProductController', function ($scope, $http, $routeParams, $location) {
-    const contextPath = 'http://209.38.249.127:8050/app/';
+    const contextPath = 'http://165.232.72.177:8050/app/';
 
     $scope.prepareProductForUpdate = function () {
         $http.get(contextPath + 'products/' + $routeParams.productId)
