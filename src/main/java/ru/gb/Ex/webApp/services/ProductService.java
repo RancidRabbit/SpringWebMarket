@@ -5,7 +5,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.gb.Ex.webApp.dto.ProductDTO;
+import ru.gb.Ex.webApp.entities.Categories;
 import ru.gb.Ex.webApp.entities.Product;
+import ru.gb.Ex.webApp.exceptions.ResourceNotFoundException;
 import ru.gb.Ex.webApp.repositories.ProductRepo;
 
 import java.util.List;
@@ -16,15 +20,7 @@ import java.util.Optional;
 public class ProductService {
 
     private final ProductRepo repo;
-
-    /*private final EntityManager manager;
-
-    public Optional<Product> update(Product product) {
-        Session session = manager.unwrap(Session.class);
-        session.saveOrUpdate(product);
-        return Optional.of(product);
-    }*/
-
+    private final CategoryService categoryService;
 
     public Page<Product> findAll(int pageIndex, int pageSize) {
         return repo.findAll(PageRequest.of(pageIndex, pageSize));
@@ -47,16 +43,16 @@ public class ProductService {
         repo.deleteById((long) id);
     }
 
-    public List<Product> findProductByPriceAfter(int min_price) {
-        return repo.findProductByPriceAfter(min_price);
-    }
-
-    public List<Product> findProductByPriceBefore(int max_price) {
-        return repo.findProductByPriceBefore(max_price);
-    }
-
-    public List<Product> findProductByPriceBetween(int min_price, int max_price) {
-        return repo.findProductByPriceBetween(min_price, max_price);
+    @Transactional
+    public void saveOrUpdate(ProductDTO productDTO) {
+        Product product = findById(productDTO.getId()).orElseThrow(() ->
+                new ResourceNotFoundException("Продукт с id " + productDTO.getId() + " не найден!"));
+        product.setTitle(productDTO.getTitle());
+        product.setPrice(productDTO.getPrice());
+        Categories categories = categoryService
+                .findByTitle(productDTO.getCategoryTitle())
+                .orElseThrow(() -> new ResourceNotFoundException("Категория " + productDTO.getCategoryTitle() + " не существует!"));
+        product.setCategories(categories);
     }
 
 

@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private final ProductService productService;
-    
+
     private final CategoryService categoryService;
 
     private final OrderService orderService;
 
     @GetMapping("/products")
-    public Page<ProductDTO> findAll(@RequestParam(name = "p", defaultValue = "1") int pageIndex ) {
+    public Page<ProductDTO> findAll(@RequestParam(name = "p", defaultValue = "1") int pageIndex) {
         if (pageIndex < 0) {
             pageIndex = 1;
         }
@@ -45,7 +45,7 @@ public class ProductController {
     }
 
     @GetMapping("/categories")
-    public List<String> findAll(){
+    public List<String> findAll() {
         return categoryService.findAllCategories();
     }
 
@@ -55,18 +55,12 @@ public class ProductController {
     }
 
 
+    /**
+     * @author Sumerkin A. 15.05.2023
+     */
     @PutMapping("/products")
-    public ProductDTO saveOrUpdate(@RequestBody ProductDTO productDTO) {
-        Product product = new Product();
-        product.setId(productDTO.getId());
-        product.setTitle(productDTO.getTitle());
-        product.setPrice(productDTO.getPrice());
-        Categories categories = categoryService
-                .findByTitle(productDTO.getCategoryTitle())
-                .orElseThrow(() -> new ResourceNotFoundException("Категория " + productDTO.getCategoryTitle() + " не существует!"));
-        product.setCategories(categories);
-        productService.addProduct(product);
-        return new ProductDTO(product);
+    public void saveOrUpdate(@RequestBody ProductDTO productDTO) {
+        productService.saveOrUpdate(productDTO);
     }
 
     @PostMapping("/products")
@@ -92,13 +86,5 @@ public class ProductController {
         return new ProductDTO(product);
     }
 
-
-   /* @GetMapping("/products/filter")
-    public List<Product> priceFilter(@RequestParam(value = "min", required = false) Integer min_price,
-                                         @RequestParam(value = "max",required = false) Integer max_price) {
-        if (Optional.ofNullable(max_price).isPresent() & Optional.ofNullable(min_price).isEmpty()) return productService.findProductByPriceBefore((max_price));
-        if (Optional.ofNullable(min_price).isPresent() & Optional.ofNullable(max_price).isEmpty()) return productService.findProductByPriceAfter((min_price));
-        return productService.findProductByPriceBetween((min_price),(max_price));
-    }*/
 
 }
