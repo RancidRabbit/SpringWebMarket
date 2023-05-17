@@ -43,7 +43,7 @@
 })();
 
 angular.module('market-front').controller('indexController', function ($rootScope, $scope, $http, $localStorage, $location) {
-    const contextPath = 'http://165.232.72.177:8050/app/';
+    const contextPath = 'http://localhost:8050/app/';
     var stompClient = null;
     const handlers = [];
 

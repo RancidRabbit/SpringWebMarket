@@ -1,5 +1,5 @@
 angular.module('market-front').controller('cartController', function ($rootScope, $scope, $http) {
-    const contextPath = 'http://165.232.72.177:8050/app/api/v1/carts';
+    const contextPath = 'http://loca:8050/app/api/v1/carts';
     const toOrders = 'http://165.232.72.177:8050/app/send';
 
     /* Название метода поменять? loadCart() */
