@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   API:
-    image: spring-docker:latest
+    image: spring-docker-local:latest
     ports:
       - "8050:8050"
     depends_on:
